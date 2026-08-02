@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hair Lice Comb — উকুনমুক্ত জীবন শুরু করুন</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1F2937;
+    --paper:#FBFAF6;
+    --teal:#146B5E;
+    --teal-deep:#0D4F45;
+    --mint:#E7F5EC;
+    --coral:#FF6A45;
+    --coral-deep:#E5501F;
+    --line:#E3E0D6;
+    --gold:#D6A24C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Hind Siliguri', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Baloo Da 2', sans-serif;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:480px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,0.06);position:relative;}
+
+  /* Comb motif divider */
+  .comb-divider{
+    height:26px;
+    width:100%;
+    background:
+      repeating-linear-gradient(90deg, var(--teal) 0 2px, transparent 2px 14px);
+    opacity:0.35;
+    position:relative;
+  }
+
+  /* HERO */
+  .hero{
+    background:linear-gradient(180deg, var(--teal-deep) 0%, var(--teal) 100%);
+    color:#fff;
+    padding:36px 24px 44px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 22px);
+    pointer-events:none;
+  }
+  .eyebrow{
+    display:inline-block;
+    font-size:12px;
+    letter-spacing:0.08em;
+    background:rgba(255,255,255,0.14);
+    padding:5px 14px;
+    border-radius:20px;
+    margin-bottom:14px;
+    font-weight:600;
+  }
+  .hero h1{
+    font-size:26px;
+    font-weight:700;
+    line-height:1.35;
+    margin-bottom:18px;
+    position:relative;
+  }
+  .hero h1 span{color:var(--gold);}
+  .product-shot{
+    width:190px; height:190px;
+    margin:0 auto 22px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff, #EAF6F1 70%);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 18px 40px rgba(0,0,0,0.25), inset 0 0 0 6px rgba(255,255,255,0.5);
+    position:relative;
+  }
+  .comb-icon{width:100px;height:100px;}
+  .cta-btn{
+    display:inline-block;
+    width:100%;
+    background:linear-gradient(180deg, var(--coral), var(--coral-deep));
+    color:#fff;
+    font-family:'Baloo Da 2', sans-serif;
+    font-weight:700;
+    font-size:17px;
+    padding:15px 20px;
+    border:none;
+    border-radius:12px;
+    box-shadow:0 10px 22px rgba(229,80,31,0.35);
+    text-align:center;
+    text-decoration:none;
+    cursor:pointer;
+  }
+  .cta-btn:active{transform:translateY(1px);}
+  .cta-sub{font-size:12px;margin-top:10px;opacity:0.85;}
+
+  section{padding:34px 22px;}
+  .section-title{
+    font-size:21px;
+    font-weight:700;
+    color:var(--teal-deep);
+    text-align:center;
+    margin-bottom:6px;
+  }
+  .section-sub{
+    text-align:center;
+    font-size:14px;
+    color:#6B7280;
+    margin-bottom:22px;
+  }
+
+  /* Carousel */
+  .carousel{
+    display:flex; gap:12px; overflow-x:auto;
+    padding:6px 2px 14px;
+    scroll-snap-type:x mandatory;
+  }
+  .carousel::-webkit-scrollbar{display:none;}
+  .card{
+    min-width:78%;
+    scroll-snap-align:center;
+    background:var(--mint);
+    border-radius:16px;
+    padding:20px;
+    text-align:center;
+    border:1px solid #D7ECDF;
+  }
+  .card .stars{color:var(--gold);font-size:15px;margin-bottom:8px;}
+  .card p{font-size:13.5px;color:#374151;}
+  .card .name{margin-top:10px;font-weight:600;font-size:13px;color:var(--teal-deep);}
+  .dots{display:flex;justify-content:center;gap:6px;margin-top:6px;}
+  .dots span{width:6px;height:6px;border-radius:50%;background:#D6D3C7;}
+  .dots span.active{background:var(--teal);width:16px;border-radius:4px;}
+
+  /* Problem list */
+  .problem-list{list-style:none;}
+  .problem-list li{
+    display:flex; gap:12px; align-items:flex-start;
+    background:#FFF6F3;
+    border:1px solid #FADBCF;
+    border-radius:12px;
+    padding:13px 14px;
+    margin-bottom:10px;
+    font-size:14.5px;
+  }
+  .problem-list li .mark{
+    flex:none;width:22px;height:22px;border-radius:50%;
+    background:var(--coral); color:#fff; font-size:13px; font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .solution-banner{
+    background:var(--teal-deep);
+    color:#fff;
+    border-radius:18px;
+    padding:26px 20px;
+    text-align:center;
+    margin:0 22px;
+  }
+  .solution-banner .display{font-size:20px;margin-bottom:6px;}
+  .solution-banner p{font-size:13.5px;opacity:0.9;}
+
+  /* Benefits */
+  .benefit-grid{display:flex;flex-direction:column;gap:12px;}
+  .benefit{
+    display:flex; gap:14px; align-items:flex-start;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px;
+  }
+  .benefit .ico{
+    flex:none;width:36px;height:36px;border-radius:10px;
+    background:var(--mint); color:var(--teal-deep);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;
+  }
+  .benefit h4{font-size:14.5px;color:var(--teal-deep);margin-bottom:3px;}
+  .benefit p{font-size:13px;color:#6B7280;}
+
+  /* Reviews */
+  .review{
+    display:flex; gap:12px;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .review:last-child{border-bottom:none;}
+  .avatar{
+    flex:none;width:46px;height:46px;border-radius:50%;
+    background:linear-gradient(135deg, var(--teal), var(--gold));
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-family:'Baloo Da 2';
+  }
+  .review .stars{color:var(--gold);font-size:13px;margin-bottom:3px;}
+  .review .name{font-weight:600;font-size:14px;}
+  .review p{font-size:13.5px;color:#4B5563;margin-top:3px;}
+
+  /* FAQ */
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:15px 2px; cursor:pointer; font-weight:600; font-size:14.5px;
+  }
+  .faq-q .plus{color:var(--coral);font-size:20px;font-family:'Baloo Da 2';transition:transform .2s;}
+  .faq-a{max-height:0; overflow:hidden; font-size:13.5px; color:#6B7280; transition:max-height .25s ease;}
+  .faq-item.open .faq-a{max-height:200px;padding-bottom:14px;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+
+  /* Guarantee */
+  .guarantee{
+    background:var(--mint);
+    border:1px dashed var(--teal);
+    border-radius:16px;
+    padding:22px;
+    text-align:center;
+  }
+  .guarantee .badge{
+    width:56px;height:56px;border-radius:50%;
+    background:var(--teal-deep);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 10px;font-family:'Baloo Da 2';font-weight:800;font-size:15px;
+  }
+
+  /* Order form */
+  .order-box{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px; box-shadow:0 6px 20px rgba(0,0,0,0.04);
+  }
+  .order-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;font-size:14px;border-bottom:1px solid #F0EFE9;}
+  .order-row.total{font-weight:700;color:var(--teal-deep);font-size:16px;border-bottom:none;}
+  .field{margin-bottom:12px;}
+  .field label{font-size:12.5px;color:#6B7280;display:block;margin-bottom:4px;}
+  .field input{
+    width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:9px;font-size:14px;font-family:inherit;
+  }
+  .pay-note{
+    background:var(--mint);color:var(--teal-deep);font-size:13px;
+    padding:10px 12px;border-radius:9px;text-align:center;margin:14px 0;font-weight:600;
+  }
+
+  /* Offer grid */
+  .offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .offer-card{
+    border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;background:#fff;
+  }
+  .offer-card .thumb{
+    width:100%;aspect-ratio:1/1;border-radius:10px;
+    background:linear-gradient(135deg,var(--mint),#fff);
+    display:flex;align-items:center;justify-content:center;margin-bottom:8px;
+    font-size:26px;
+  }
+  .offer-card .price{color:var(--coral-deep);font-weight:700;font-size:13.5px;}
+  .offer-card .old{color:#9CA3AF;text-decoration:line-through;font-size:12px;margin-left:5px;}
+
+  footer{
+    text-align:center;padding:26px 22px 40px;font-size:11.5px;color:#9CA3AF;
+  }
+  .sticky-cta{
+    position:sticky; bottom:0; left:0; right:0;
+    background:#fff; padding:12px 16px; border-top:1px solid var(--line);
+    box-shadow:0 -6px 18px rgba(0,0,0,0.06);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="eyebrow">১০০% প্রাকৃতিক সমাধান</span>
+    <h1>চুলের ক্ষতি ছাড়াই <span>উকুনমুক্ত</span> জীবন শুরু করুন আজই!</h1>
+    <div class="product-shot">
+      <svg class="comb-icon" viewBox="0 0 100 100" fill="none">
+        <rect x="20" y="15" width="60" height="16" rx="8" fill="#146B5E"/>
+        <rect x="20" y="15" width="60" height="16" rx="8" fill="url(#g)"/>
+        <defs><linearGradient id="g" x1="20" y1="15" x2="80" y2="31"><stop stop-color="#1A8272"/><stop offset="1" stop-color="#0D4F45"/></linearGradient></defs>
+        <g stroke="#0D4F45" stroke-width="2.4">
+          <line x1="25" y1="31" x2="25" y2="80"/>
+          <line x1="31" y1="31" x2="31" y2="82"/>
+          <line x1="37" y1="31" x2="37" y2="84"/>
+          <line x1="43" y1="31" x2="43" y2="85"/>
+          <line x1="49" y1="31" x2="49" y2="86"/>
+          <line x1="55" y1="31" x2="55" y2="85"/>
+          <line x1="61" y1="31" x2="61" y2="84"/>
+          <line x1="67" y1="31" x2="67" y2="82"/>
+          <line x1="73" y1="31" x2="73" y2="80"/>
+        </g>
+      </svg>
+    </div>
+    <a href="#order" class="cta-btn">আরও জানতে ক্লিক করুন</a>
+    <div class="cta-sub">✓ ব্যথাহীন ✓ রাসায়নিকমুক্ত ✓ সহজ ব্যবহার</div>
+  </div>
+  <div class="comb-divider"></div>
+
+  <!-- CAROUSEL / SOCIAL PROOF -->
+  <section>
+    <div class="section-title">১০০% কাস্টমার সন্তুষ্ট</div>
+    <div class="section-sub">"Hair Lice Comb" নিয়ে গ্রাহকদের অভিজ্ঞতা</div>
+    <div class="carousel" id="carousel">
+      <div class="card">
+        <div class="stars">★★★★★</div>
+        <p>মাত্র ৩ দিনেই উকুন সম্পূর্ণ চলে গেছে। আগে যা কিছুতেই কমছিল না।</p>
+        <div class="name">— রুমা আক্তার, খুলনা</div>
+      </div>
+      <div class="card">
+        <div class="stars">★★★★★</div>
+        <p>বাচ্চার মাথায় ব্যবহার করেছি, চুলের কোনো ক্ষতি হয়নি। খুবই নিরাপদ।</p>
+        <div class="name">— নাসরিন সুলতানা, ঢাকা</div>
+      </div>
+      <div class="card">
+        <div class="stars">★★★★★</div>
+        <p>দাম অনুযায়ী অসাধারণ কার্যকর। পুরো পরিবার এখন এটাই ব্যবহার করি।</p>
+        <div class="name">— সাবিনা ইয়াসমিন, চট্টগ্রাম</div>
+      </div>
+    </div>
+    <div class="dots"><span class="active"></span><span></span><span></span></div>
+    <div style="margin-top:20px;"><a href="#order" class="cta-btn">অর্ডার করতে ক্লিক করুন</a></div>
+  </section>
+  <div class="comb-divider"></div>
+
+  <!-- PROBLEMS -->
+  <section style="background:#fff;">
+    <div class="section-title">আপনার সমস্যাগুলো কি এমন?</div>
+    <ul class="problem-list">
+      <li><span class="mark">!</span> সারাক্ষণ মাথা চুলকানো, স্বস্তি পাচ্ছেন না</li>
+      <li><span class="mark">!</span> উকুনের ওষুধ ব্যবহার করেও সমাধান হচ্ছে না</li>
+      <li><span class="mark">!</span> চিরুনি ব্যবহারে চুল ছিঁড়ে যাচ্ছে বা ব্যথা লাগছে</li>
+      <li><span class="mark">!</span> বাচ্চার মাথায় বারবার উকুন ফিরে আসছে</li>
+    </ul>
+    <div style="margin-top:18px;"><a href="#order" class="cta-btn">সমাধান জানতে ক্লিক করুন</a></div>
+  </section>
+  <div class="comb-divider"></div>
+
+  <!-- SOLUTION -->
+  <section style="padding-left:0;padding-right:0;">
+    <div class="solution-banner">
+      <div class="display">এই সব সমস্যার সমাধান নিয়ে এসেছে —</div>
+      <div class="display" style="color:var(--gold);font-size:24px;">Hair Lice Comb</div>
+      <p>স্টেইনলেস স্টিল সূক্ষ্ম দাঁতের চিরুনি, যা উকুন ও ডিম দুটোই সম্পূর্ণ দূর করে — কোনো ওষুধ ছাড়াই।</p>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section>
+    <div class="section-title">বৈশিষ্ট্য ও সুবিধাসমূহ</div>
+    <div class="benefit-grid">
+      <div class="benefit"><div class="ico">✓</div><div><h4>স্টেইনলেস স্টিল দাঁত</h4><p>মরিচামুক্ত ও দীর্ঘস্থায়ী, বারবার ব্যবহার করা যায়</p></div></div>
+      <div class="benefit"><div class="ico">✓</div><div><h4>উকুন ও ডিম দুটোই দূর করে</h4><p>একবার ব্যবহারেই স্পষ্ট পার্থক্য বুঝবেন</p></div></div>
+      <div class="benefit"><div class="ico">✓</div><div><h4>ব্যথাহীন ও নিরাপদ</h4><p>শিশু থেকে বড় সবার জন্য উপযোগী</p></div></div>
+      <div class="benefit"><div class="ico">✓</div><div><h4>রাসায়নিকমুক্ত সমাধান</h4><p>কোনো ওষুধ বা কেমিক্যালের প্রয়োজন নেই</p></div></div>
+      <div class="benefit"><div class="ico">✓</div><div><h4>এরগনোমিক হ্যান্ডেল</h4><p>আরামদায়ক গ্রিপ, সহজে ব্যবহারযোগ্য</p></div></div>
+    </div>
+  </section>
+  <div class="comb-divider"></div>
+
+  <!-- REVIEWS -->
+  <section style="background:#fff;">
+    <div class="section-title">গ্রাহকদের মন্তব্য</div>
+    <div class="section-sub">হাজারো গ্রাহকের আস্থার ফলাফল</div>
+    <div class="review">
+      <div class="avatar">র</div>
+      <div><div class="stars">★★★★★</div><div class="name">রহিমা বেগম</div><p>প্রথমবার ব্যবহারেই ফলাফল দেখে অবাক হয়েছি। সত্যিই কার্যকর।</p></div>
+    </div>
+    <div class="review">
+      <div class="avatar">ফ</div>
+      <div><div class="stars">★★★★★</div><div class="name">ফারহানা হক</div><p>ডেলিভারি দ্রুত পেয়েছি, প্যাকেজিং ভালো ছিল। প্রোডাক্টও মানসম্মত।</p></div>
+    </div>
+    <div class="review">
+      <div class="avatar">শ</div>
+      <div><div class="stars">★★★★★</div><div class="name">শারমিন আক্তার</div><p>মেয়ের স্কুলে বারবার উকুন হতো, এখন এই চিরুনি দিয়ে পুরোপুরি সমাধান।</p></div>
+    </div>
+  </section>
+  <div class="comb-divider"></div>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-title">আপনার প্রশ্ন? আমাদের উত্তর</div>
+    <div id="faq">
+      <div class="faq-item open">
+        <div class="faq-q">এটি কি সব বয়সের জন্য নিরাপদ? <span class="plus">+</span></div>
+        <div class="faq-a">হ্যাঁ, বাচ্চা থেকে প্রাপ্তবয়স্ক — সবার জন্যই নিরাপদ ও ব্যবহারযোগ্য।</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">ফলাফল পেতে কতদিন লাগে? <span class="plus">+</span></div>
+        <div class="faq-a">নিয়মিত ব্যবহারে ২-৩ দিনের মধ্যেই স্পষ্ট পরিবর্তন লক্ষ্য করবেন।</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">ক্যাশ অন ডেলিভারি সুবিধা আছে কি? <span class="plus">+</span></div>
+        <div class="faq-a">হ্যাঁ, সারাদেশে ক্যাশ অন ডেলিভারিতে অর্ডার করতে পারবেন।</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">প্রোডাক্ট পছন্দ না হলে ফেরত দেওয়া যাবে? <span class="plus">+</span></div>
+        <div class="faq-a">হ্যাঁ, আমাদের ৭ দিনের রিটার্ন পলিসি রয়েছে শর্তসাপেক্ষে।</div>
+      </div>
+    </div>
+  </section>
+  <div class="comb-divider"></div>
+
+  <!-- GUARANTEE -->
+  <section>
+    <div class="guarantee">
+      <div class="badge">100%</div>
+      <div class="section-title" style="margin-bottom:6px;">গ্যারান্টিসহ নিশ্চয়তা</div>
+      <p style="font-size:13.5px;color:#4B5563;">পণ্যের মান নিয়ে আমরা শতভাগ নিশ্চিত। সন্তুষ্ট না হলে সহজ রিটার্ন সুবিধা।</p>
+    </div>
+  </section>
+  <div class="comb-divider"></div>
+
+  <!-- ORDER FORM -->
+  <section id="order" style="background:#fff;">
+    <div class="section-title">অর্ডার সম্পন্ন করতে নিচের তথ্য দিন</div>
+    <div class="order-box">
+      <div class="order-row"><span>Hair Lice Comb (১টি)</span><span>৳৩৯০</span></div>
+      <div class="order-row"><span>ডেলিভারি চার্জ</span><span>৳৬০</span></div>
+      <div class="order-row total"><span>সর্বমোট</span><span>৳৪৫০</span></div>
+
+      <div class="field" style="margin-top:16px;"><label>আপনার নাম</label><input type="text" placeholder="পূর্ণ নাম লিখুন"></div>
+      <div class="field"><label>মোবাইল নম্বর</label><input type="tel" placeholder="017XXXXXXXX"></div>
+      <div class="field"><label>ঠিকানা</label><input type="text" placeholder="জেলা, থানা, গ্রাম/এলাকা"></div>
+
+      <div class="pay-note">💵 ক্যাশ অন ডেলিভারি — পণ্য হাতে পেয়ে টাকা দিন</div>
+      <button class="cta-btn" style="width:100%;">অর্ডার নিশ্চিত করুন</button>
+    </div>
+  </section>
+
+  <!-- SPECIAL OFFER -->
+  <section>
+    <div class="section-title">স্পেশাল অফার</div>
+    <div class="section-sub">এখনই অর্ডারে অতিরিক্ত ছাড়</div>
+    <div class="offer-grid">
+      <div class="offer-card"><div class="thumb">🧴</div><div>হেয়ার অয়েল</div><div class="price">৳২৫০ <span class="old">৳৩৫০</span></div></div>
+      <div class="offer-card"><div class="thumb">🪮</div><div>ডিটাংগলিং ব্রাশ</div><div class="price">৳৩২০ <span class="old">৳৪৫০</span></div></div>
+    </div>
+  </section>
+
+  <div class="sticky-cta">
+    <a href="#order" class="cta-btn">এখনই অর্ডার করুন — ৳৪৫০</a>
+  </div>
+
+  <footer>© ২০২৬ Hair Lice Comb। সর্বস্বত্ব সংরক্ষিত। ডেমো ল্যান্ডিং পেজ — শুধুমাত্র উদাহরণস্বরূপ।</footer>
+</div>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(q=>{
+    q.addEventListener('click',()=>{
+      const item=q.parentElement;
+      document.querySelectorAll('.faq-item').forEach(i=>{if(i!==item)i.classList.remove('open');});
+      item.classList.toggle('open');
+    });
+  });
+  const carousel=document.getElementById('carousel');
+  const dots=document.querySelectorAll('.dots span');
+  carousel.addEventListener('scroll',()=>{
+    const idx=Math.round(carousel.scrollLeft/(carousel.firstElementChild.offsetWidth+12));
+    dots.forEach((d,i)=>d.classList.toggle('active', i===idx));
+  });
+</script>
+</body>
+</html>
