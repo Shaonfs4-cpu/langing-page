@@ -65,6 +65,8 @@ input:focus,select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,24
 .cap:hover{border-color:var(--pink)}
 .cap span{font:500 11px 'JetBrains Mono',monospace;color:var(--pink);flex-shrink:0;padding-top:2px}
 .cap p{font-size:13px;line-height:1.5}
+.cap span{white-space:nowrap}
+.stats{font:500 12px 'JetBrains Mono',monospace;color:var(--lime);padding:8px 10px;border:1px solid rgba(182,255,59,.35);border-radius:10px;background:rgba(182,255,59,.06)}
 .empty{font-size:12px;color:var(--mute)}
 footer{text-align:center;font-size:12px;color:var(--mute);padding:6px 16px}
 footer a{display:inline-flex;align-items:center;gap:4px;color:var(--cyan);font-weight:700;text-decoration:none;
@@ -155,6 +157,19 @@ footer a:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
         </select>
       </div>
     </div>
+    <div>
+      <label class="l">✂️ Words per caption line (Premiere Pro ready)</label>
+      <select id="chunkSelect" onchange="applyChunking()">
+        <option value="0">Original (AI sentences)</option>
+        <option value="1">1 word at a time</option>
+        <option value="2">2 words</option>
+        <option value="3" selected>3 words</option>
+        <option value="4">4 words</option>
+        <option value="5">5 words</option>
+        <option value="6">6 words</option>
+        <option value="8">8 words</option>
+      </select>
+    </div>
     <button id="generateBtn" class="btn main" onclick="startCaptionGeneration()">✨ Generate captions</button>
     <div id="statusBox" class="hidden"></div>
   </section>
@@ -174,6 +189,7 @@ footer a:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
         <button onclick="downloadSRT()">⬇ .SRT</button>
       </div>
     </div>
+    <div id="captionStats" class="stats hidden"></div>
     <div id="captionList"><p class="empty">Captions appear here. Tap a timestamp to jump to that moment.</p></div>
   </section>
 
@@ -189,6 +205,7 @@ footer a:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
   let isYouTubeUrl = false;
   let ytPlayerInstance = null;
   let captionsData = [];
+  let rawCaptions = [];
   let syncTimer = null;
   let recognition = null;
   let isListening = false;
@@ -327,6 +344,7 @@ footer a:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
     try {
       let parts = [];
       const promptText = `Listen carefully to the speech in this video and generate accurate, time-synced captions translated/transcribed into ${langName}.
+Timestamps must be precise to 0.1 second, and each caption should be one short phrase (max about 8 words) that matches exactly when it is spoken.
 Return ONLY a valid JSON array of objects in this exact format without markdown fences:
 [{"start": 0.0, "end": 3.5, "text": "caption text in ${langName}"}]`;
 
@@ -347,8 +365,8 @@ Return ONLY a valid JSON array of objects in this exact format without markdown 
       });
 
       const rawJson = data.candidates?.[0]?.content?.parts?.[0]?.text || '[]';
-      captionsData = JSON.parse(rawJson.replace(/```json|```/g, '').trim());
-      renderCaptionList();
+      rawCaptions = JSON.parse(rawJson.replace(/```json|```/g, '').trim());
+      applyChunking();
       showStatus(`✅ Generated ${captionsData.length} captions in ${langName}! Play the video to view.`, false);
     } catch (err) {
       showStatus('Error: ' + err.message, true);
@@ -388,8 +406,8 @@ Return ONLY a valid JSON array of objects in this exact format without markdown 
         const transcript = event.results[i][0].transcript;
         if (event.results[i].isFinal) {
           const t = getCurrentVideoTime();
-          captionsData.push({ start: Math.max(0, t - 3), end: t, text: transcript.trim() });
-          renderCaptionList();
+          rawCaptions.push({ start: Math.max(0, t - 3), end: t, text: transcript.trim() });
+          applyChunking();
         } else {
           interim += transcript;
         }
@@ -419,11 +437,58 @@ Return ONLY a valid JSON array of objects in this exact format without markdown 
     }
   }
 
+  // Re-split the AI captions into N words per line, spreading time by word length.
+  // Runs instantly when the selector changes, so no need to regenerate.
+  function applyChunking() {
+    const n = parseInt(document.getElementById('chunkSelect').value, 10);
+    if (!n) {
+      captionsData = rawCaptions.map(c => ({ ...c }));
+    } else {
+      captionsData = [];
+      rawCaptions.forEach(seg => {
+        const text = String(seg.text || '').trim();
+        if (!text) return;
+        const spaced = text.split(/\s+/);
+        let tokens = spaced;
+        if (spaced.length === 1 && text.length > n * 3) tokens = text.match(new RegExp('.{1,' + (n * 3) + '}', 'gu'));
+        const joiner = spaced.length === 1 ? '' : ' ';
+        const groups = [];
+        for (let i = 0; i < tokens.length; i += n) groups.push(tokens.slice(i, i + n).join(joiner));
+        const total = groups.reduce((s, g) => s + g.length + 1, 0);
+        const dur = Math.max(0, seg.end - seg.start);
+        let t = seg.start;
+        groups.forEach(g => {
+          const d = dur * ((g.length + 1) / total);
+          captionsData.push({ start: t, end: t + d, text: g });
+          t += d;
+        });
+      });
+    }
+    renderCaptionList();
+  }
+
+  function formatTimeMs(sec) {
+    const m = Math.floor(sec / 60).toString().padStart(2, '0');
+    const s = (sec % 60).toFixed(2).padStart(5, '0');
+    return `${m}:${s}`;
+  }
+
   function renderCaptionList() {
     const box = document.getElementById('captionList');
-    if (!captionsData.length) { box.innerHTML = '<p class="empty">No captions found.</p>'; return; }
-    box.innerHTML = captionsData.map(c => `
-      <div class="cap" onclick="seekTo(${c.start})"><span>${formatTime(c.start)}</span><p>${c.text}</p></div>`).join('');
+    const stats = document.getElementById('captionStats');
+    if (!captionsData.length) {
+      box.innerHTML = '<p class="empty">No captions found.</p>';
+      stats.classList.add('hidden');
+      return;
+    }
+    const words = rawCaptions.reduce((s, c) => s + String(c.text || '').trim().split(/\s+/).filter(Boolean).length, 0);
+    const dur = Math.max(0.1, rawCaptions[rawCaptions.length - 1].end - rawCaptions[0].start);
+    stats.textContent = `Lines: ${captionsData.length} · Words: ${words} · Avg: ${(words / dur).toFixed(1)} words/sec`;
+    stats.classList.remove('hidden');
+    box.innerHTML = captionsData.map(c => {
+      const wc = String(c.text).trim().split(/\s+/).filter(Boolean).length;
+      return `<div class="cap" onclick="seekTo(${c.start})"><span>${formatTimeMs(c.start)} → ${formatTimeMs(c.end)}<br>${wc} word${wc === 1 ? '' : 's'}</span><p>${c.text}</p></div>`;
+    }).join('');
   }
 
   function seekTo(s) {
